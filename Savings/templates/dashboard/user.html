@@ -1,0 +1,164 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title text-center mb-4">Account Details</h3>
+                    <h5 class="card-text">Username: {{ current_user.username }}</h5>
+                    <h5 class="card-text">Account Number: {{ account.account_number }}</h5>
+                    <h5 class="card-text">Balance: {{ account.balance }}</h5>
+                </div>
+                <div class="card-footer">
+                    <div class="d-flex justify-content-between">
+                        <button type="submit" class="btn btn-success"><a style="color: white; text-decoration: none;"
+                                href="/requests">Deposit</a></button>
+                        <button type="submit" class="btn btn-success"><a style="color: white; text-decoration: none;"
+                                href="/requests">Withdrawn</a></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="table-responsive">
+                <h1 class="text-center mb-4">Requests Table</h1>
+                <form method="POST" action="">
+                    {{ form.csrf_token }}
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label for="{{ form.from_date.id }}">From Date:</label>
+                            {{ form.from_date }}
+                        </div>
+                        <div class="col-md-4">
+                            <label for="{{ form.to_date.id }}">To Date:</label>
+                            {{ form.to_date }}
+                        </div>
+                        <div class="col-md-2">
+                            {{ form.submit(class_="btn btn-primary mt-4") }}
+                        </div>
+                    </div>
+                </form>
+                <table class="table table-bordered mt-4">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Account Number</th>
+                            <th>Request Type</th>
+                            <th>Amount</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for request in requests %}
+                        <tr>
+                            <td>{{ request.transanct_date}}</td>
+                            <td>{{ request.account_number}}</td>
+                            <td>{{ request.request_type}}</td>
+                            <td>{{ request.amount}}</td>
+                            <td>{{ request.status}}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style type="text/css">
+    /* Custom CSS */
+.container {
+    margin-top: 50px;
+}
+
+.card {
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    background-color: #f8f9fa;
+    padding: 20px;
+}
+
+.card-title {
+    margin-bottom: 20px;
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+}
+
+.card-text {
+    font-size: 18px;
+    color: #666;
+}
+
+.card-footer {
+    background-color: #f8f9fa;
+    border-top: none;
+}
+
+.btn {
+    border-radius: 5px;
+    font-weight: bold;
+    padding: 12px 20px;
+    text-transform: uppercase;
+    width: 100%;
+}
+
+.btn-success {
+    background-color: #28a745;
+    border: none;
+}
+
+.btn-success:hover {
+    background-color: #1e7e34;
+}
+
+.table-responsive {
+    margin-top: 50px;
+}
+
+h1 {
+    font-size: 36px;
+    font-weight: bold;
+    color: #333;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+form {
+    margin-bottom: 20px;
+}
+
+label {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+/* Customize date fields */
+input[type="date"] {
+    padding: 12px;
+    font-size: 16px;
+    color: #333;
+    border: none;
+    border-radius: 5px;
+    background-color: #f8f9fa;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    outline: none;
+}
+
+input[type="date"]::placeholder {
+    color: #999;
+}
+
+input[type="date"]:focus {
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+</style>
+{% endblock %}
